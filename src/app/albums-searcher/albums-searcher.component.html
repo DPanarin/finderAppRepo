@@ -1,0 +1,37 @@
+
+<div class="form-group">
+	<input class="field" type="text" placeholder="artist name" [(ngModel)]="requestedName" (keyup.enter)="search()">
+	<button type="button" class="btn btn-outline-dark" (click) = "search()">Search</button>
+</div>
+<p *ngIf="!responseItunes?.results.length" class="note">
+	{{message}}
+</p>
+
+<p *ngIf="responseItunes?.results.length">
+	Searching albums by artist: <strong>{{requestedName}}</strong><br>
+	{{responseItunes?.results.length}} albums found.
+</p>
+
+<table class="table table-striped table-fixed">
+	<tr class="tableHeader" *ngIf="responseItunes?.results.length">
+		<th>Album</th>
+		<th>Release date</th>
+		<th>Album's cover</th>
+	</tr>
+	<tr *ngFor="let album of responseItunes?.results">
+		<td class="column"><a href="{{album.collectionViewUrl}}" target="_blank">{{album.collectionName}}</a></td>
+		<td class="column">{{album.releaseDate.substring(5,7) + "." + album.releaseDate.substring(0,4)}}</td>
+		<td class="column"><img src="{{album.artworkUrl100}}" alt="cover image"></td>
+	</tr>
+</table>
+
+<div class="footerResults" *ngIf="responseItunes?.results.length">
+	<div class="logo"><img src="/assets/images/iTunes_logo.jpg"></div>
+	<p>Searched by iTunes and Deezer APIs</p>
+</div>
+<br>
+<br>
+<div class="footerMain">
+	<p>Created by Dmytriy Panarin</p>
+	<p>2018</p>
+</div>
